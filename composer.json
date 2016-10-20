@@ -1,5 +1,5 @@
 {
-    "name": "joomla/access",
+    "name": "matware-lab/access",
     "type": "joomla-package",
     "description": "Joomla Access Package",
     "keywords": ["joomla", "framework", "access"],
