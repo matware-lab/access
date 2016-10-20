@@ -135,12 +135,9 @@ class Access
 	/**
 	 * Constructor.
 	 *
-	 *
-	 *
-	 *
 	 * @param   Container  $container  A Joomla! DI Container
 	 *
-	 * @since   1.0
+	 * @since   4.0
 	 */
 	public function __construct(Container $container)
 	{
@@ -170,7 +167,7 @@ class Access
 		// Default to the root asset node.
 		if (empty($asset))
 		{
-			$db = JFactory::getDbo();
+			$db = $this->container->get('db');
 			$assets = Table::getInstance('Asset', 'Table', array('dbo' => $db));
 			$asset = $assets->getRootId();
 		}
@@ -334,7 +331,7 @@ class Access
 		if (!isset(self::$assetPermissionsParentIdMapping[$extensionName]))
 		{
 			// Get the database connection object.
-			$db = JFactory::getDbo();
+			$db = $this->container->get('db');
 
 			// Get a fresh query object:
 			$query    = $db->getQuery(true);
@@ -374,7 +371,7 @@ class Access
 		if (!isset(self::$assetPermissionsById[$extensionName]) && !isset(self::$assetPermissionsByName[$extensionName]))
 		{
 			// Get the database connection object.
-			$db = JFactory::getDbo();
+			$db = $this->container->get('db');
 
 			// Get a fresh query object:
 			$query    = $db->getQuery(true);
@@ -416,7 +413,7 @@ class Access
 	protected static function preloadComponents()
 	{
 		// Get the database connection object.
-		$db = JFactory::getDbo();
+		$db = $this->container->get('db');
 
 		// Build the database query:
 		$query    = $db->getQuery(true);
@@ -514,7 +511,7 @@ class Access
 		// Default to the root asset node.
 		if (empty($asset))
 		{
-			$db = JFactory::getDbo();
+			$db = $this->container->get('db');
 			$assets = Table::getInstance('Asset', 'Table', array('dbo' => $db));
 			$asset = $assets->getRootId();
 		}
@@ -626,7 +623,7 @@ class Access
 			}
 
 			// Get the database connection object.
-			$db = JFactory::getDbo();
+			$db = $this->container->get('db');
 
 			// Build the database query to get the rules for the asset.
 			$query = $db->getQuery(true)
@@ -671,7 +668,7 @@ class Access
 			// Get the root even if the asset is not found and in recursive mode
 			if (empty($result))
 			{
-				$db = JFactory::getDbo();
+				$db = $this->container->get('db');
 				$assets = Table::getInstance('Asset', 'Table', array('dbo' => $db));
 				$rootId = $assets->getRootId();
 				$query->clear()
@@ -776,7 +773,7 @@ class Access
 	public static function getGroupTitle($groupId)
 	{
 		// Fetch the group title from the database
-		$db    = JFactory::getDbo();
+		$db    = $this->container->get('db');
 		$query = $db->getQuery(true);
 		$query->select('title')
 			->from('#__usergroups')
@@ -823,7 +820,7 @@ class Access
 			// Registered user and guest if all groups are requested
 			else
 			{
-				$db = JFactory::getDbo();
+				$db = $this->container->get('db');
 
 				// Build the database query to get the rules for the asset.
 				$query = $db->getQuery(true)
@@ -884,7 +881,7 @@ class Access
 	public static function getUsersByGroup($groupId, $recursive = false)
 	{
 		// Get a database object.
-		$db = JFactory::getDbo();
+		$db = $this->container->get('db');
 
 		$test = $recursive ? '>=' : '=';
 
@@ -924,7 +921,7 @@ class Access
 		if (empty(self::$viewLevels))
 		{
 			// Get a database object.
-			$db = JFactory::getDbo();
+			$db = $this->container->get('db');
 
 			// Build the base query.
 			$query = $db->getQuery(true)
